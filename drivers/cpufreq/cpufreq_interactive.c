@@ -414,13 +414,13 @@ static u64 update_load(int cpu)
 		ppol->policy->governor_data;
 	u64 now;
 	u64 now_idle;
-	unsigned int delta_idle;
-	unsigned int delta_time;
+	u64 delta_idle;
+	u64 delta_time;
 	u64 active_time;
 
 	now_idle = get_cpu_idle_time(cpu, &now, tunables->io_is_busy);
-	delta_idle = (unsigned int)(now_idle - pcpu->time_in_idle);
-	delta_time = (unsigned int)(now - pcpu->time_in_idle_timestamp);
+	delta_idle = (now_idle - pcpu->time_in_idle);
+	delta_time = (now - pcpu->time_in_idle_timestamp);
 
 	if (delta_time <= delta_idle)
 		active_time = 0;
@@ -444,12 +444,9 @@ static void __cpufreq_interactive_timer(unsigned long data, bool is_notif)
 	struct cpufreq_interactive_policyinfo *ppol = per_cpu(polinfo, data);
 	struct cpufreq_interactive_tunables *tunables =
 		ppol->policy->governor_data;
-	struct sched_load *sl = ppol->sl;
 	struct cpufreq_interactive_cpuinfo *pcpu;
 	unsigned int new_freq;
-	unsigned int prev_laf = 0, t_prevlaf;
-	unsigned int pred_laf = 0, t_predlaf = 0;
-	unsigned int prev_chfreq, pred_chfreq, chosen_freq;
+	unsigned int loadadjfreq = 0, tmploadadjfreq;
 	unsigned int index;
 	unsigned long flags;
 	unsigned long max_cpu;
@@ -474,15 +471,13 @@ static void __cpufreq_interactive_timer(unsigned long data, bool is_notif)
 					* ppol->policy->cpuinfo.max_freq;
 			do_div(cputime_speedadj, tunables->timer_rate);
 		} else {
-			now = update_load(cpu);
+			now = update_load(i);
 			delta_time = (unsigned int)
 				(now - pcpu->cputime_speedadj_timestamp);
 			if (WARN_ON_ONCE(!delta_time))
 				continue;
 			cputime_speedadj = pcpu->cputime_speedadj;
 			do_div(cputime_speedadj, delta_time);
-			t_prevlaf = (unsigned int)cputime_speedadj * 100;
-			prev_l = t_prevlaf / ppol->target_freq;
 		}
 		tmploadadjfreq = (unsigned int)cputime_speedadj * 100;
 		pcpu->loadadjfreq = tmploadadjfreq;
@@ -490,9 +485,9 @@ static void __cpufreq_interactive_timer(unsigned long data, bool is_notif)
 						  ppol->policy->cur);
 
 		/* find max of loadadjfreq inside policy */
-		if (t_prevlaf > prev_laf) {
-			prev_laf = t_prevlaf;
-			max_cpu = cpu;
+		if (tmploadadjfreq > loadadjfreq) {
+			loadadjfreq = tmploadadjfreq;
+			max_cpu = i;
 		}
 	}
 	spin_unlock_irqrestore(&ppol->load_lock, flags);
@@ -624,6 +619,11 @@ rearm:
 exit:
 	up_read(&ppol->enable_sem);
 	return;
+}
+
+static void cpufreq_interactive_timer(unsigned long data)
+{
+	__cpufreq_interactive_timer(data, false);
 }
 
 static int cpufreq_interactive_speedchange_task(void *data)
