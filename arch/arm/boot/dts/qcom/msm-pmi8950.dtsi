@@ -208,7 +208,7 @@
 			#size-cells = <1>;
 
 			qcom,iterm-ma = <100>;
-			qcom,float-voltage-mv = <4350>;
+			qcom,float-voltage-mv = <4400>;
 			qcom,fastchg-current-ma = <2400>;
 			qcom,resume-delta-mv = <200>;
 			qcom,chg-inhibit-fg;
@@ -224,6 +224,7 @@
 			qcom,pmic-revid = <&pmi8950_revid>;
 			qcom,force-aicl-rerun;
 			qcom,aicl-rerun-period-s = <180>;
+			qcom,float-voltage-comp = <11>;
 
 			qcom,chgr@1000 {
 				reg = <0x1000 0x100>;
