@@ -9,6 +9,7 @@ qcom,2728170_mido_sunwoda_4100mah_averaged_masterslave_jan3rd2017 {
 	qcom,chg-rslow-comp-c2 = <4074348>;
 	qcom,chg-rs-to-rslow = <921524>;
 	qcom,chg-rslow-comp-thr = <0x9C>;
+	qcom,fastchg-current-ma = <2400>;
 	qcom,checksum = <0xDC57>;
 	qcom,gui-version = "PMI8950GUI - 2.0.0.16";
 	qcom,fg-profile-data = [
