@@ -338,6 +338,7 @@
 			qcom,fg-cc-cv-threshold-mv = <4340>;
 			qcom,pmic-revid = <&pmi8950_revid>;
 			qcom,capacity-learning-feedback;
+			qcom,fg-cutoff-voltage-mv = <3400>;
 
 			qcom,fg-soc@4000 {
 				status = "okay";
