@@ -9920,7 +9920,7 @@ static inline int nohz_kick_needed(struct rq *rq, int *type)
 	if (unlikely(rq->idle_balance))
 		return 0;
 
-       /*
+	/*
 	* We may be recently in ticked or tickless idle mode. At the first
 	* busy tick after returning from idle, we will update the busy stats.
 	*/
