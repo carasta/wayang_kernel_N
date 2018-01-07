@@ -9,7 +9,6 @@ qcom,2786095_mido_coslight_4100mah_averaged_masterslave_feb3rd2017 {
 	qcom,chg-rslow-comp-c2 = <5394943>;
 	qcom,chg-rs-to-rslow = <823652>;
 	qcom,chg-rslow-comp-thr = <0xAE>;
-	qcom,fastchg-current-ma = <2400>;
 	qcom,checksum = <0xF02E>;
 	qcom,gui-version = "PMI8950GUI - 2.0.0.16";
 	qcom,fg-profile-data = [
