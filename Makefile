@@ -406,6 +406,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
+		   -Wno-packed-not-aligned \
 		   -std=gnu89 \
 		   -mcpu=cortex-a53 -mtune=cortex-a53 \
 
@@ -624,6 +625,9 @@ KBUILD_AFLAGS	+= $(call cc-option,-fno-PIE)
 
 # Needed to unbreak GCC 7.x and above
 KBUILD_CFLAGS   += $(call cc-option,-fno-store-merging,)
+
+# Disable attributes warnings
+KBUILD_CFLAGS   += $(call cc-disable-warning,attributes,)
 
 KBUILD_CFLAGS   += $(call cc-disable-warning,misleading-indentation,)
 

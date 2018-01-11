@@ -24,7 +24,7 @@
 
 #include "mdss_mdp.h"
 
-#define DEF_PCC 0x100
+#define DEF_PCC 0xff
 #define DEF_PA 0xff
 #define PCC_ADJ 0x80
 
@@ -319,8 +319,8 @@ static ssize_t kcal_store(struct device *dev, struct device_attribute *attr,
 	struct kcal_lut_data *lut_data = dev_get_drvdata(dev);
 
 	r = sscanf(buf, "%d %d %d", &kcal_r, &kcal_g, &kcal_b);
-	if ((r != 3) || (kcal_r < 0 || kcal_r > 256) ||
-		(kcal_g < 0 || kcal_g > 256) || (kcal_b < 0 || kcal_b > 256))
+	if ((r != 3) || (kcal_r < 0 || kcal_r > 255) ||
+		(kcal_g < 0 || kcal_g > 255) || (kcal_b < 0 || kcal_b > 255))
 		return -EINVAL;
 
 	lut_data->red = kcal_r;
@@ -349,7 +349,7 @@ static ssize_t kcal_min_store(struct device *dev,
 	struct kcal_lut_data *lut_data = dev_get_drvdata(dev);
 
 	r = kstrtoint(buf, 10, &kcal_min);
-	if ((r) || (kcal_min < 0 || kcal_min > 256))
+	if ((r) || (kcal_min < 0 || kcal_min > 255))
 		return -EINVAL;
 
 	lut_data->minimum = kcal_min;

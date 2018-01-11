@@ -274,8 +274,8 @@
 	qcom,thermal-coefficients = [c8 86 c1 50 d3 37];
 	qcom,cold-bat-decidegc = <0>;
 	qcom,cool-bat-decidegc = <100>;
-	qcom,warm-bat-decidegc = <500>;
-	qcom,hot-bat-decidegc = <550>;
+	qcom,warm-bat-decidegc = <490>;
+	qcom,hot-bat-decidegc = <510>;
 	qcom,bad-battery-detection-enable;
 	qcom,hold-soc-while-full;
 };
