@@ -121,6 +121,9 @@
 		/* Quirks */
 		qcom,gpu-quirk-two-pass-use-wfi;
 		qcom,gpu-quirk-dp2clockgating-disable;
+		
+		/* Disable wake on touch */
+		qcom,disable-wake-on-touch;
 
 		/* Trace bus */
 		coresight-id = <67>;
